@@ -7,21 +7,11 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
     stages {
-        //clean
         stage("Install Slack CLI") {
-            steps {
-                sh "curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh | bash"
-            }
-        }
-        stage("Checkout Code") {
-            steps {
-                script {
-                    parallel APPS.collectEntries {
-                        ["${it}": { checkoutRepo(it) }]
+                    steps {
+                        sh "curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh | bash"
                     }
                 }
-            }
-        }
         stage("Authenticate CLI") {
             steps {
                 script {
@@ -37,9 +27,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 script {
-                    parallel APPS.collectEntries {
-                        ["${it}": { deploy(it) }]
-                    }
+                   sh 'slack deploy'
                 }
             }
         }
