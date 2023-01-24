@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
-                        sh ('$slack_cli_name login --auth ${SLACK_USER_TOKEN')
+                        sh ('$slack_cli_name login --auth ${SLACK_USER_TOKEN}')
                     }
                 }
             }
