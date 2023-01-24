@@ -16,6 +16,22 @@ pipeline {
                           sh 'slack deploy'
                     }
                 }
+        stage("Authenticate CLI") {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
+                        sh ('slack login --auth $SLACK_USER_TOKEN')
+                    }
+                }
+            }
+        }
+        stage("Deploy") {
+            steps {
+                script {
+                   sh 'slack deploy'
+                }
+            }
+        }
     }
 }
 def checkoutRepo(String app) {
