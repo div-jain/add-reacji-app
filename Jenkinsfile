@@ -13,7 +13,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
                         sh('#!/bin/bash +xe\n' + "${SOURCING}; curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh")
                          sh ('slack login --auth $SLACK_USER_TOKEN')
-                          sh 'slack deploy'
+                         }
                     }
                 }
         stage("Authenticate CLI") {
