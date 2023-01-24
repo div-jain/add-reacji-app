@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
-                        def out = sh (script: "${slack_cli_name} login", returnStdout: true)
+                        sh '$slack_cli_name login' > out
                         println(out)
                         def extractedString = out =~ /\/slackauthticket(.+)/
                         println(extractedString​[0][0])
