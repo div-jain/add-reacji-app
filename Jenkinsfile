@@ -10,25 +10,12 @@ pipeline {
     stages {
         stage("Install Slack CLI") {
                     steps {
-                        sh('#!/bin/bash +xe\n' + "${SOURCING}; curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh")
-                    }
-                }
-        stage("Authenticate CLI") {
-            steps {
-                script {
                     withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
-                        sh ('slack login --auth $SLACK_USER_TOKEN')
+                        sh('#!/bin/bash +xe\n' + "${SOURCING}; curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh")
+                         sh ('slack login --auth $SLACK_USER_TOKEN')
+                          sh 'slack deploy'
                     }
                 }
-            }
-        }
-        stage("Deploy") {
-            steps {
-                script {
-                   sh 'slack deploy'
-                }
-            }
-        }
     }
 }
 def checkoutRepo(String app) {
