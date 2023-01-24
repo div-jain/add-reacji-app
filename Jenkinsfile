@@ -20,7 +20,7 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
                     sh ('cd $slack_cli_install_bin_dir')
-                        sh ('$slack_cli_name login --auth $SLACK_USER_TOKEN')
+                        sh ('$slack_cli_name login -auth $SLACK_USER_TOKEN')
                     }
                 }
             }
@@ -32,16 +32,6 @@ pipeline {
                 }
             }
         }
-    }
-}
-def checkoutRepo(String app) {
-    dir(app) {
-        git(
-                poll: true,
-                url: "https://github.com/salesforce-it/${app}",
-                branch: 'master',
-                credentialsId: 'GITHUB_CREDENTIALS'
-        )
     }
 }
 def deploy(String app){
