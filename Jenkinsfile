@@ -18,7 +18,7 @@ pipeline {
         stage("Authenticate CLI") {
             steps {
              withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
-                    sh('$slack_cli_name login --auth $SLACK_USER_TOKEN')
+                    sh('sudo $slack_cli_name login --auth $SLACK_USER_TOKEN')
                 }
             }
         }
