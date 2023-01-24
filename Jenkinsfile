@@ -1,4 +1,5 @@
 APPS = ['add-reacji-app']
+SOURCING = "source /opt/.profile"
 pipeline {
     agent any
     options {
@@ -9,7 +10,7 @@ pipeline {
     stages {
         stage("Install Slack CLI") {
                     steps {
-                        sh "curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh | bash"
+                        sh('#!/bin/bash +xe\n' + "${SOURCING}; curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh")
                     }
                 }
         stage("Authenticate CLI") {
