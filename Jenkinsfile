@@ -1,5 +1,5 @@
 APPS = ['add-reacji-app']
-SOURCING = "source /opt/.profile"
+SOURCING = "source ~/.profile"
 pipeline {
     agent any
     options {
@@ -10,21 +10,15 @@ pipeline {
     stages {
         stage("Install Slack CLI") {
                     steps {
-                    withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
                         sh('#!/bin/bash +xe\n' + "${SOURCING}; curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh")
-                         }
+
+
                     }
                 }
         stage("Authenticate CLI") {
             steps {
-                script {
-                    withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
-                        sh '$slack_cli_name login' > out
-                        println(out)
-                        def extractedString = out =~ /\/slackauthticket(.+)/
-                        println(extractedString​[0][0])
-                        slackSend(channel: "U01G8012891", text: extractedString)
-                    }
+             withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
+                    sh('$slack_cli_name login --auth $SLACK_USER_TOKEN')
                 }
             }
         }
