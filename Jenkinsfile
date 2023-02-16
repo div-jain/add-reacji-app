@@ -8,6 +8,13 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
     stages {
+        stage("check version") {
+                    steps {
+                        script {
+                           sh 'slack version'
+                        }
+                    }
+                }
         stage("Authenticate CLI") {
             steps {
              withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
