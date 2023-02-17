@@ -1,5 +1,3 @@
-APPS = ['add-reacji-app']
-SOURCING = "source ~/.profile"
 pipeline {
     agent {label 'java'}
     options {
@@ -9,28 +7,31 @@ pipeline {
     }
     stages {
         stage("check version") {
-                    steps {
-                        script {
-                           sh 'slack version'
-                        }
-                    }
+            steps {
+                script {
+                    sh '''#!/bin/bash -xe
+                         slack version
+                         '''
                 }
+            }
+        }
         stage("Authenticate CLI") {
             steps {
-             withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
-                    sh 'slack login --auth SLACK_USER_TOKEN'
+                withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
+                    sh '''#!/bin/bash -xe
+                    slack login --auth SLACK_USER_TOKEN
+                    '''
                 }
             }
         }
         stage("Deploy") {
             steps {
                 script {
-                   sh 'slack deploy'
+                    sh '''#!/bin/bash -xe
+                    slack deploy
+                    '''
                 }
             }
         }
     }
-}
-def deploy(String app){
-    sh "slack deploy"
 }
