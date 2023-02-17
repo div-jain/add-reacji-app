@@ -10,6 +10,7 @@ pipeline {
             steps {
                 script {
                     sh '''#!/bin/bash -xe
+                         slack doctor
                          slack version -v
                          '''
                 }
