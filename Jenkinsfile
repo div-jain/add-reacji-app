@@ -21,7 +21,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'SLACK_USER_TOKEN', variable: 'SLACK_USER_TOKEN')]) {
                     sh '''#!/bin/bash -xe
-                    slack login --auth SLACK_USER_TOKEN
+                    slack login --auth $SLACK_USER_TOKEN
                     '''
                 }
             }
