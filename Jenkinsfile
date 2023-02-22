@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     sh '''#!/bin/bash -xe
-                    slack deploy
+                    slack deploy  -w internal-sandbox
                     '''
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
                     steps {
                         script {
                             sh '''#!/bin/bash -xe
-                            slack activity
+                            slack activity  -w internal-sandbox -t
                             '''
                         }
                     }
